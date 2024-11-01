@@ -1,3 +1,20 @@
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const drawer = ref(false)
+const router = useRouter()
+
+function toggleDrawer() {
+  drawer.value = !drawer.value
+}
+
+function navigateTo(route) {
+  router.push(route)
+  drawer.value = false // Close the drawer after navigating
+}
+</script>
+
 <template>
   <v-app>
     <!-- App Bar -->
@@ -67,23 +84,6 @@
     </v-main>
   </v-app>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-
-const drawer = ref(false)
-const router = useRouter()
-
-function toggleDrawer() {
-  drawer.value = !drawer.value
-}
-
-function navigateTo(route) {
-  router.push(route)
-  drawer.value = false // Close the drawer after navigating
-}
-</script>
 
 <style scoped>
 .navbar {
