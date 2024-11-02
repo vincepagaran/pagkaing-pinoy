@@ -1,9 +1,16 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { reactive } from 'vue'
 
 const drawer = ref(false)
 const router = useRouter()
+
+const user = reactive({
+  initials: 'JD',
+  fullName: 'John Doe',
+  email: 'john.doe@doe.com',
+})
 
 function toggleDrawer() {
   drawer.value = !drawer.value
@@ -25,14 +32,41 @@ function navigateTo(route) {
 
       <!-- Desktop Links (shown on large screens) -->
       <v-spacer></v-spacer>
-      <v-row class="d-none d-md-flex">
-        <!-- Visible only on medium screens and larger -->
-        <v-btn text @click="navigateTo('/home')">Home</v-btn>
-        <v-btn text @click="navigateTo('/about')">About</v-btn>
-        <v-btn text @click="navigateTo('/recipe')">Dishes</v-btn>
-        <v-btn text @click="navigateTo('/category')">Categories</v-btn>
-        <v-btn text @click="navigateTo('/bookmark')">Cooklater</v-btn>
-        <v-btn text @click="navigateTo('/')">Logout</v-btn>
+      <v-row class="d-flex align-center" justify="space-around">
+        <v-tabs v-model="tab" align-tabs="center" color="deep-purple-accent-4">
+          <v-tab @click="navigateTo('/home')">Home</v-tab>
+          <v-tab @click="navigateTo('/about')">About</v-tab>
+          <v-tab @click="navigateTo('/recipe')">Dishes</v-tab>
+          <v-tab @click="navigateTo('/category')">Categories</v-tab>
+          <v-tab @click="navigateTo('/bookmark')">Cooklater</v-tab>
+        </v-tabs>
+        <v-menu offset-y>
+          <template v-slot:activator="{ props }">
+            <v-btn icon v-bind="props">
+              <v-avatar color="brown" size="large">
+                <span class="text-h5">{{ user.initials }}</span>
+              </v-avatar>
+            </v-btn>
+          </template>
+          <v-card>
+            <v-card-text>
+              <div class="mx-auto text-center">
+                <v-avatar color="brown">
+                  <span class="text-h5">{{ user.initials }}</span>
+                </v-avatar>
+                <h3>{{ user.fullName }}</h3>
+                <p class="text-caption mt-1">
+                  {{ user.email }}
+                </p>
+                <v-divider class="my-3"></v-divider>
+                <v-btn variant="text" rounded> Edit Account </v-btn>
+                <v-divider class="my-3"></v-divider>
+                <v-btn variant="text" rounded> Disconnect </v-btn>
+                <v-btn text @click="navigateTo('/')">Logout</v-btn>
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-menu>
       </v-row>
 
       <!-- Mobile Menu Icon (shown on small screens) -->
@@ -86,6 +120,11 @@ function navigateTo(route) {
 </template>
 
 <style scoped>
+.profile-avatar {
+  cursor: pointer;
+  border: 2px solid #ffffff;
+}
+
 .navbar {
   background-color: #213032; /* Change navbar color */
   color: white;
