@@ -23,7 +23,7 @@ function navigateTo(route) {
 </script>
 
 <template>
-    <v-app>
+  <v-app>
     <!-- App Bar -->
     <v-app-bar app dense class="navbar">
       <v-toolbar-title>
@@ -34,11 +34,21 @@ function navigateTo(route) {
       <v-spacer></v-spacer>
       <v-row class="d-flex align-center" justify="space-around">
         <v-tabs v-model="tab" align-tabs="center" color="deep-purple-accent-4">
-          <v-tab @click="navigateTo('/home')">Home</v-tab>
-          <v-tab @click="navigateTo('/about')">About</v-tab>
-          <v-tab @click="navigateTo('/recipe')">Dishes</v-tab>
-          <v-tab @click="navigateTo('/category')">Categories</v-tab>
-          <v-tab @click="navigateTo('/bookmark')">Cooklater</v-tab>
+          <v-tab @click="navigateTo('/home')">
+            <v-icon left>mdi-home</v-icon>Home
+          </v-tab>
+          <v-tab @click="navigateTo('/about')">
+            <v-icon left>mdi-information</v-icon> About
+          </v-tab>
+          <v-tab @click="navigateTo('/recipe')">
+            <v-icon left>mdi-silverware-fork-knife</v-icon> Dishes
+          </v-tab>
+          <v-tab @click="navigateTo('/category')">
+            <v-icon left>mdi-view-list</v-icon> Categories
+          </v-tab>
+          <v-tab @click="navigateTo('/bookmark')">
+            <v-icon left>mdi-bookmark</v-icon> Cooklater
+          </v-tab>
         </v-tabs>
         <v-menu offset-y>
           <template v-slot:activator="{ props }">
@@ -103,13 +113,10 @@ function navigateTo(route) {
 
     <!-- Main Content Placeholder -->
     <v-main>
-
       <router-view></router-view>
     </v-main>
   </v-app>
-  <v-footer
-    class="bg-indigo-lighten-1 text-center d-flex flex-column"
-  >
+  <v-footer class="bg-indigo-lighten-1 text-center d-flex flex-column">
     <div>
       <v-btn
         v-for="icon in icons"
@@ -121,13 +128,17 @@ function navigateTo(route) {
     </div>
 
     <div class="pt-0">
-      Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+      Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris
+      cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id
+      ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui.
+      Duis commodo vitae velit et faucibus. Morbi vehicula lacinia malesuada.
+      Nulla placerat augue vel ipsum ultrices, cursus iaculis dui sollicitudin.
+      Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius
+      natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
     </div>
 
     <v-divider></v-divider>
 
-    <div>
-      {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
-    </div>
+    <div>{{ new Date().getFullYear() }} — <strong>Vuetify</strong></div>
   </v-footer>
 </template>
