@@ -4,7 +4,6 @@ import { useRouter } from 'vue-router'
 import { reactive } from 'vue'
 
 const drawer = ref(false)
-const rail = ref(true)
 const router = useRouter()
 
 const user = reactive({
@@ -12,10 +11,6 @@ const user = reactive({
   fullName: 'John Doe',
   email: 'john.doe@doe.com',
 })
-
-function toggleDrawer() {
-  drawer.value = !drawer.value
-}
 
 function navigateTo(route) {
   router.push(route)
@@ -26,150 +21,112 @@ function navigateTo(route) {
 <template>
   <v-responsive>
     <v-app>
-      <!-- App Bar -->
-      <v-app-bar app dense class="navbar">
-        <v-toolbar-title>
-          <img src="" class="logo" /> Pagkaing<span>Pinoy</span>
-        </v-toolbar-title>
+      <v-card>
+        <v-toolbar>
+          <v-toolbar-title>Cook APP</v-toolbar-title>
 
-        <!-- Desktop Links (shown on large screens) -->
-        <v-spacer></v-spacer>
-        <v-row class="d-flex align-center" justify="space-around">
-          <v-tabs v-model="tab" align-tabs="center" color="deep-black-accent-4">
-            <v-tab @click="navigateTo('/home')">
-              <v-icon left>mdi-home</v-icon>Home
-            </v-tab>
-            <v-tab @click="navigateTo('/about')">
-              <v-icon left>mdi-information</v-icon> About
-            </v-tab>
-            <v-tab @click="navigateTo('/recipe')">
-              <v-icon left>mdi-silverware-fork-knife</v-icon> Dishes
-            </v-tab>
-            <v-tab @click="navigateTo('/category')">
-              <v-icon left>mdi-view-list</v-icon> Categories
-            </v-tab>
-            <v-tab @click="navigateTo('/bookmark')">
-              <v-icon left>mdi-bookmark</v-icon> Cooklater
-            </v-tab>
-          </v-tabs>
-          <v-menu offset-y>
+          <v-text-field
+            v-model="searchQuery"
+            placeholder="Search..."
+            append-inner-icon="mdi-magnify"
+            single-line
+            hide-details
+            dense
+            outlined
+            @click:append="performSearch"
+          />
+
+          <v-menu>
             <template v-slot:activator="{ props }">
               <v-btn icon v-bind="props">
-                <v-avatar color="brown" size="large">
-                  <span class="text-h5">{{ user.initials }}</span>
+                <v-avatar>
+                  <v-img alt="John" src="/pics/self.jpeg"></v-img>
                 </v-avatar>
               </v-btn>
             </template>
             <v-card>
               <v-card-text>
                 <div class="mx-auto text-center">
-                  <v-avatar color="brown">
-                    <span class="text-h5">{{ user.initials }}</span>
-                  </v-avatar>
                   <h3>{{ user.fullName }}</h3>
-                  <p class="text-caption mt-1">
-                    {{ user.email }}
-                  </p>
+                  <p class="text-caption mt-1">{{ user.email }}</p>
                   <v-divider class="my-3"></v-divider>
-                  <v-btn text color="black"> Edit Account </v-btn>
-                  <v-divider class="my-3"></v-divider>
-                  <v-btn text color="black" @click="navigateTo('/')"
-                    >Logout</v-btn
-                  >
+
+                  <v-list density="compact" nav>
+                    <v-list-item
+                      prepend-icon="mdi-folder"
+                      title="My Files"
+                      value="myfiles"
+                    ></v-list-item>
+                    <v-list-item
+                      prepend-icon="mdi-account-multiple"
+                      title="Shared with me"
+                      value="shared"
+                    ></v-list-item>
+                    <v-list-item
+                      prepend-icon="mdi-star"
+                      title="Starred"
+                      value="starred"
+                    ></v-list-item>
+
+                    <v-divider class="my-2"></v-divider>
+                    <!-- Divider to separate logout option -->
+
+                    <v-list-item
+                      prepend-icon="mdi-logout"
+                      title="Logout"
+                      value="logout"
+                      @click="handleLogout"
+                    ></v-list-item>
+                  </v-list>
                 </div>
               </v-card-text>
             </v-card>
           </v-menu>
-        </v-row>
 
-        <!-- Mobile Menu Icon (shown on small screens) -->
-        <v-app-bar-nav-icon
-          class="d-md-none"
-          @click="toggleDrawer"
-        ></v-app-bar-nav-icon>
-      </v-app-bar>
-      <v-navigation-drawer
-        v-model="drawer"
-        :rail="rail"
-        permanent
-        @click="rail = false"
-      >
-        <v-list-item
-          prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-          title="John Leider"
-          nav
-        >
-          <template v-slot:append>
-            <v-btn
-              class="d-flex align-center"
-              icon="mdi-chevron-left"
-              variant="text"
-              @click.stop="rail = !rail"
-            ></v-btn>
+          <template v-slot:extension>
+            <v-container class="justify-center">
+              <v-tabs v-model="tab" align-tabs="title">
+                <v-tab @click="navigateTo('/home')">
+                  <v-icon left>mdi-home</v-icon>Home
+                </v-tab>
+                <v-tab @click="navigateTo('/about')">
+                  <v-icon left>mdi-information</v-icon> About
+                </v-tab>
+                <v-tab @click="navigateTo('/recipe')">
+                  <v-icon left>mdi-silverware-fork-knife</v-icon> Dishes
+                </v-tab>
+                <v-tab @click="navigateTo('/category')">
+                  <v-icon left>mdi-view-list</v-icon> Categories
+                </v-tab>
+                <v-tab @click="navigateTo('/bookmark')">
+                  <v-icon left>mdi-bookmark</v-icon> Cooklater
+                </v-tab>
+              </v-tabs>
+            </v-container>
           </template>
-        </v-list-item>
-
-        <v-divider></v-divider>
-
-        <v-list density="compact" nav>
-          <v-list-item
-            @click="navigateTo('/home')"
-            prepend-icon="mdi-home-city"
-            title="Home"
-            value="home"
-          ></v-list-item>
-
-          <v-list-item
-            @click="navigateTo('/about')"
-            prepend-icon="mdi-information"
-            title="About"
-            value="about"
-          ></v-list-item>
-
-          <v-list-item
-            @click="navigateTo('/recipe')"
-            prepend-icon="mdi-silverware-fork-knife"
-            title="Dishes"
-            value="recipe"
-          ></v-list-item>
-
-          <v-list-item
-            @click="navigateTo('/category')"
-            prepend-icon="mdi-view-list"
-            title="Categories"
-            value="category"
-          ></v-list-item>
-
-          <v-list-item
-            @click="navigateTo('/bookmark')"
-            prepend-icon="mdi-bookmark"
-            title="Cooklater"
-            value="bookmark"
-          ></v-list-item>
-        </v-list>
-      </v-navigation-drawer>
-
-      <!-- Main Content Placeholder -->
-      <v-main>
-        <div class="hero">
-          <div class="content">
-            <h4>Authentic Filipino Recipes</h4>
-            <h1>Welcome to <span>Pagkaing Pinoy!</span></h1>
-            <div class="button">
-              <v-btn @click="navigateTo('/recipe')" class="view-dishes-btn"
-                >View Dishes</v-btn
-              >
+        </v-toolbar>
+        <!-- Main Content Placeholder -->
+        <v-main>
+          <div class="hero">
+            <div class="content">
+              <h4>Authentic Filipino Recipes</h4>
+              <h1>Welcome to <span>Pagkaing Pinoy!</span></h1>
+              <div class="button">
+                <v-btn @click="navigateTo('/recipe')" class="view-dishes-btn"
+                  >View Dishes</v-btn
+                >
+              </div>
             </div>
           </div>
-        </div>
 
-        <router-view></router-view>
-      </v-main>
-      <v-footer class="bg-grey-darken-1 text-center d-flex flex-column">
-        <v-divider></v-divider>
+          <router-view></router-view>
+        </v-main>
+        <v-footer class="bg-grey-darken-1 text-center d-flex flex-column">
+          <v-divider></v-divider>
 
-        <div>{{ new Date().getFullYear() }} — <strong>COOK</strong></div>
-      </v-footer>
+          <div>{{ new Date().getFullYear() }} — <strong>COOK</strong></div>
+        </v-footer>
+      </v-card>
     </v-app>
   </v-responsive>
 </template>
