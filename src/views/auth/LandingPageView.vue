@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { reactive } from 'vue'
 
 const drawer = ref(false)
+const rail = ref(true)
 const router = useRouter()
 
 const user = reactive({
@@ -23,147 +24,157 @@ function navigateTo(route) {
 </script>
 
 <template>
-  <v-app>
-    <!-- App Bar -->
-    <v-app-bar app dense class="navbar">
-      <v-toolbar-title>
-        <img src="" class="logo" /> Pagkaing<span>Pinoy</span>
-      </v-toolbar-title>
+  <v-responsive>
+    <v-app>
+      <!-- App Bar -->
+      <v-app-bar app dense class="navbar">
+        <v-toolbar-title>
+          <img src="" class="logo" /> Pagkaing<span>Pinoy</span>
+        </v-toolbar-title>
 
-      <!-- Desktop Links (shown on large screens) -->
-      <v-spacer></v-spacer>
-      <v-row class="d-flex align-center" justify="space-around">
-        <v-tabs v-model="tab" align-tabs="center" color="deep-purple-accent-4">
-          <v-tab @click="navigateTo('/home')">Home</v-tab>
-          <v-tab @click="navigateTo('/about')">About</v-tab>
-          <v-tab @click="navigateTo('/recipe')">Dishes</v-tab>
-          <v-tab @click="navigateTo('/category')">Categories</v-tab>
-          <v-tab @click="navigateTo('/bookmark')">Cooklater</v-tab>
-        </v-tabs>
-        <v-menu offset-y>
-          <template v-slot:activator="{ props }">
-            <v-btn icon v-bind="props">
-              <v-avatar color="brown" size="large">
-                <span class="text-h5">{{ user.initials }}</span>
-              </v-avatar>
-            </v-btn>
-          </template>
-          <v-card>
-            <v-card-text>
-              <div class="mx-auto text-center">
-                <v-avatar color="brown">
+        <!-- Desktop Links (shown on large screens) -->
+        <v-spacer></v-spacer>
+        <v-row class="d-flex align-center" justify="space-around">
+          <v-tabs v-model="tab" align-tabs="center" color="deep-black-accent-4">
+            <v-tab @click="navigateTo('/home')">
+              <v-icon left>mdi-home</v-icon>Home
+            </v-tab>
+            <v-tab @click="navigateTo('/about')">
+              <v-icon left>mdi-information</v-icon> About
+            </v-tab>
+            <v-tab @click="navigateTo('/recipe')">
+              <v-icon left>mdi-silverware-fork-knife</v-icon> Dishes
+            </v-tab>
+            <v-tab @click="navigateTo('/category')">
+              <v-icon left>mdi-view-list</v-icon> Categories
+            </v-tab>
+            <v-tab @click="navigateTo('/bookmark')">
+              <v-icon left>mdi-bookmark</v-icon> Cooklater
+            </v-tab>
+          </v-tabs>
+          <v-menu offset-y>
+            <template v-slot:activator="{ props }">
+              <v-btn icon v-bind="props">
+                <v-avatar color="brown" size="large">
                   <span class="text-h5">{{ user.initials }}</span>
                 </v-avatar>
-                <h3>{{ user.fullName }}</h3>
-                <p class="text-caption mt-1">
-                  {{ user.email }}
-                </p>
-                <v-divider class="my-3"></v-divider>
-                <v-btn variant="text" rounded> Edit Account </v-btn>
-                <v-divider class="my-3"></v-divider>
-                <v-btn variant="text" rounded> Disconnect </v-btn>
-                <v-btn text @click="navigateTo('/')">Logout</v-btn>
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-menu>
-      </v-row>
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-text>
+                <div class="mx-auto text-center">
+                  <v-avatar color="brown">
+                    <span class="text-h5">{{ user.initials }}</span>
+                  </v-avatar>
+                  <h3>{{ user.fullName }}</h3>
+                  <p class="text-caption mt-1">
+                    {{ user.email }}
+                  </p>
+                  <v-divider class="my-3"></v-divider>
+                  <v-btn text color="black"> Edit Account </v-btn>
+                  <v-divider class="my-3"></v-divider>
+                  <v-btn text color="black" @click="navigateTo('/')"
+                    >Logout</v-btn
+                  >
+                </div>
+              </v-card-text>
+            </v-card>
+          </v-menu>
+        </v-row>
 
-      <!-- Mobile Menu Icon (shown on small screens) -->
-      <v-app-bar-nav-icon
-        class="d-md-none"
-        @click="toggleDrawer"
-      ></v-app-bar-nav-icon>
-    </v-app-bar>
+        <!-- Mobile Menu Icon (shown on small screens) -->
+        <v-app-bar-nav-icon
+          class="d-md-none"
+          @click="toggleDrawer"
+        ></v-app-bar-nav-icon>
+      </v-app-bar>
+      <v-navigation-drawer
+        v-model="drawer"
+        :rail="rail"
+        permanent
+        @click="rail = false"
+      >
+        <v-list-item
+          prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
+          title="John Leider"
+          nav
+        >
+          <template v-slot:append>
+            <v-btn
+              class="d-flex align-center"
+              icon="mdi-chevron-left"
+              variant="text"
+              @click.stop="rail = !rail"
+            ></v-btn>
+          </template>
+        </v-list-item>
 
-    <!-- Navigation Drawer (visible on small screens) -->
-    <v-navigation-drawer v-model="drawer" temporary app right>
-      <v-list>
-        <v-list-item @click="navigateTo('/home')" class="white-text"
-          >Home</v-list-item
-        >
-        <v-list-item @click="navigateTo('/about')" class="white-text"
-          >About</v-list-item
-        >
-        <v-list-item @click="navigateTo('/recipe')" class="white-text"
-          >Dishes</v-list-item
-        >
-        <v-list-item @click="navigateTo('/category')" class="white-text"
-          >Categories</v-list-item
-        >
-        <v-list-item @click="navigateTo('/bookmark')" class="white-text"
-          >Cooklater</v-list-item
-        >
-        <v-list-item @click="navigateTo('/')" class="white-text"
-          >Logout</v-list-item
-        >
-      </v-list>
-    </v-navigation-drawer>
+        <v-divider></v-divider>
 
-    <!-- Main Content Placeholder -->
-    <v-main>
-      <div class="hero">
-        <div class="content">
-          <h4>Authentic Filipino Recipes</h4>
-          <h1>Welcome to <span>Pagkaing Pinoy!</span></h1>
-          <div class="button">
-            <v-btn @click="navigateTo('/recipe')" class="view-dishes-btn"
-              >View Dishes</v-btn
-            >
+        <v-list density="compact" nav>
+          <v-list-item
+            @click="navigateTo('/home')"
+            prepend-icon="mdi-home-city"
+            title="Home"
+            value="home"
+          ></v-list-item>
+
+          <v-list-item
+            @click="navigateTo('/about')"
+            prepend-icon="mdi-information"
+            title="About"
+            value="about"
+          ></v-list-item>
+
+          <v-list-item
+            @click="navigateTo('/recipe')"
+            prepend-icon="mdi-silverware-fork-knife"
+            title="Dishes"
+            value="recipe"
+          ></v-list-item>
+
+          <v-list-item
+            @click="navigateTo('/category')"
+            prepend-icon="mdi-view-list"
+            title="Categories"
+            value="category"
+          ></v-list-item>
+
+          <v-list-item
+            @click="navigateTo('/bookmark')"
+            prepend-icon="mdi-bookmark"
+            title="Cooklater"
+            value="bookmark"
+          ></v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+
+      <!-- Main Content Placeholder -->
+      <v-main>
+        <div class="hero">
+          <div class="content">
+            <h4>Authentic Filipino Recipes</h4>
+            <h1>Welcome to <span>Pagkaing Pinoy!</span></h1>
+            <div class="button">
+              <v-btn @click="navigateTo('/recipe')" class="view-dishes-btn"
+                >View Dishes</v-btn
+              >
+            </div>
           </div>
         </div>
-      </div>
 
-      <router-view></router-view>
-    </v-main>
-  </v-app>
+        <router-view></router-view>
+      </v-main>
+      <v-footer class="bg-grey-darken-1 text-center d-flex flex-column">
+        <v-divider></v-divider>
+
+        <div>{{ new Date().getFullYear() }} — <strong>COOK</strong></div>
+      </v-footer>
+    </v-app>
+  </v-responsive>
 </template>
 
 <style scoped>
-.profile-avatar {
-  cursor: pointer;
-  border: 2px solid #ffffff;
-}
-
-.navbar {
-  background-color: #213032; /* Change navbar color */
-  color: white;
-}
-
-.logo {
-  height: 40px; /* Adjust the logo size */
-  margin-right: 10px;
-}
-
-.v-btn {
-  color: white !important;
-}
-
-.v-app-bar-nav-icon {
-  color: white;
-}
-
-.v-navigation-drawer {
-  background-color: #213032;
-}
-
-.navbar span {
-  color: #e74c3c;
-}
-
-/* White text for navigation drawer items */
-.white-text {
-  color: white;
-}
-
-.list-item {
-  transition: background-color 0.3s;
-}
-
-.list-item:hover {
-  background-color: #e74c3c; /* Change background on hover */
-}
-
 /* Hero section styling */
 .hero {
   height: 100vh; /* Full height for the hero section */

@@ -9,8 +9,13 @@ const router = useRouter() // Use Vue Router
 
 function home() {
   if (email.value && password.value) {
-    console.log('Logging in with:', email.value, password.value, rememberMe.value)
-    
+    console.log(
+      'Logging in with:',
+      email.value,
+      password.value,
+      rememberMe.value,
+    )
+
     // Simulate successful login and redirect to the home page
     router.push('/home')
   } else {
@@ -25,7 +30,8 @@ function home() {
       <v-container fluid class="d-flex justify-center align-center fill-height">
         <!-- Login Form -->
         <div class="loginform">
-          <h1 class="logintitle">Login</h1>
+          <h1 class="logintitle">Pagkaing<span>Pinoy</span></h1>
+          <h2>Login</h2>
           <div class="logininput">
             <i class="fa-solid fa-user"></i>
             <input type="Email" v-model="email" placeholder="Email" />
@@ -65,7 +71,7 @@ function home() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/public/pics/bg2.jpg'); 
+  background-image: url('/public/pics/bg2.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -99,7 +105,7 @@ function home() {
 
 .logininput input {
   width: 100%;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(209, 206, 206, 0.1);
   border: none;
   padding: 12px 12px 12px 45px;
   border-radius: 99px;
