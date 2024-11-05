@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { reactive } from 'vue'
 
 const drawer = ref(false)
+const tab = ref(null)
 const router = useRouter()
 
 const user = reactive({
@@ -15,6 +16,11 @@ const user = reactive({
 function navigateTo(route) {
   router.push(route)
   drawer.value = false // Close the drawer after navigating
+}
+function handleLogout() {
+  // Add logout logic here, like clearing user data or redirecting to login page
+  console.log('Logging out...')
+  router.push('/') // Redirect to login or home page
 }
 </script>
 
@@ -86,19 +92,19 @@ function navigateTo(route) {
           <template v-slot:extension>
             <v-container class="justify-center">
               <v-tabs v-model="tab" align-tabs="title">
-                <v-tab @click="navigateTo('/home')">
+                <v-tab :value="1" @click="navigateTo('/home')">
                   <v-icon left>mdi-home</v-icon>Home
                 </v-tab>
-                <v-tab @click="navigateTo('/about')">
+                <v-tab :value="2" @click="navigateTo('/about')">
                   <v-icon left>mdi-information</v-icon> About
                 </v-tab>
-                <v-tab @click="navigateTo('/recipe')">
+                <v-tab :value="3" @click="navigateTo('/recipe')">
                   <v-icon left>mdi-silverware-fork-knife</v-icon> Dishes
                 </v-tab>
-                <v-tab @click="navigateTo('/category')">
+                <v-tab :value="4" @click="navigateTo('/category')">
                   <v-icon left>mdi-view-list</v-icon> Categories
                 </v-tab>
-                <v-tab @click="navigateTo('/bookmark')">
+                <v-tab :value="5" @click="navigateTo('/bookmark')">
                   <v-icon left>mdi-bookmark</v-icon> Cooklater
                 </v-tab>
               </v-tabs>
