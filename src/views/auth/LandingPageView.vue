@@ -4,11 +4,11 @@ import { useRouter } from 'vue-router'
 import { reactive } from 'vue'
 
 const drawer = ref(false)
-const tab = ref(null)
 const router = useRouter()
+const searchQuery = ref('')
+const tab = ref(1)
 
 const user = reactive({
-  initials: 'JD',
   fullName: 'John Doe',
   email: 'john.doe@doe.com',
 })
@@ -22,6 +22,9 @@ function handleLogout() {
   console.log('Logging out...')
   router.push('/') // Redirect to login or home page
 }
+function performSearch() {
+  console.log('Searching for:', searchQuery.value)
+}
 </script>
 
 <template>
@@ -29,7 +32,7 @@ function handleLogout() {
     <v-app>
       <v-card>
         <v-toolbar>
-          <v-toolbar-title>Cook APP</v-toolbar-title>
+          <v-toolbar-title>FlavorSync</v-toolbar-title>
 
           <v-text-field
             v-model="searchQuery"
@@ -77,12 +80,9 @@ function handleLogout() {
                     <v-divider class="my-2"></v-divider>
                     <!-- Divider to separate logout option -->
 
-                    <v-list-item
-                      prepend-icon="mdi-logout"
-                      title="Logout"
-                      value="logout"
-                      @click="handleLogout"
-                    ></v-list-item>
+                    <v-btn prepend-icon="mdi-logout" @click="handleLogout"
+                      >Logout</v-btn
+                    >
                   </v-list>
                 </div>
               </v-card-text>
@@ -138,6 +138,13 @@ function handleLogout() {
 </template>
 
 <style scoped>
+.v-toolbar-title {
+  font-family: 'Open Sans';
+  font-weight: 600;
+  font-size: 24px;
+  color: #333;
+}
+
 /* Hero section styling */
 .hero {
   height: 100vh; /* Full height for the hero section */

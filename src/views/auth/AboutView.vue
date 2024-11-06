@@ -4,11 +4,10 @@ import { useRouter } from 'vue-router'
 import { reactive } from 'vue'
 
 const drawer = ref(false)
-const tab = ref(null)
 const router = useRouter()
+const tab = ref(2)
 
 const user = reactive({
-  initials: 'JD',
   fullName: 'John Doe',
   email: 'john.doe@doe.com',
 })
@@ -29,7 +28,7 @@ function handleLogout() {
     <v-app>
       <v-card>
         <v-toolbar>
-          <v-toolbar-title>Cook APP</v-toolbar-title>
+          <v-toolbar-title>FlavorSync</v-toolbar-title>
 
           <v-text-field
             v-model="searchQuery"
@@ -92,10 +91,10 @@ function handleLogout() {
           <template v-slot:extension>
             <v-container class="justify-center">
               <v-tabs v-model="tab" align-tabs="title">
-                <v-tab :value="2" @click="navigateTo('/home')">
+                <v-tab :value="1" @click="navigateTo('/home')">
                   <v-icon left>mdi-home</v-icon>Home
                 </v-tab>
-                <v-tab :value="1" @click="navigateTo('/about')">
+                <v-tab :value="2" @click="navigateTo('/about')">
                   <v-icon left>mdi-information</v-icon> About
                 </v-tab>
                 <v-tab :value="3" @click="navigateTo('/recipe')">
@@ -124,3 +123,12 @@ function handleLogout() {
     </v-app>
   </v-responsive>
 </template>
+
+<style scoped>
+.v-toolbar-title {
+  font-family: 'Open Sans';
+  font-weight: 600;
+  font-size: 24px;
+  color: #333;
+}
+</style>
