@@ -28,6 +28,10 @@ function home() {
   <v-app>
     <v-main>
       <v-container fluid class="d-flex justify-center align-center fill-height">
+          <v-avatar size="60">
+            <!-- Set size of v-avatar here, e.g., 40 pixels -->
+            <v-img src="/pics/logo2.webp" alt="FlavorSync Logo"></v-img>
+          </v-avatar>
         <!-- Login Form -->
         <div class="loginform">
           <h1 class="logintitle">Pagkaing<span>Pinoy</span></h1>

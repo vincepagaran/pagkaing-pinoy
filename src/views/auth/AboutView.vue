@@ -5,7 +5,18 @@ import { reactive } from 'vue'
 
 const drawer = ref(false)
 const router = useRouter()
-const tab = ref(2)
+const showSearch = ref(false)
+const searchQuery = ref('')
+const tab = ref(1)
+
+function toggleSearch() {
+  showSearch.value = !showSearch.value
+}
+
+function performSearch() {
+  console.log('Searching for:', searchQuery.value)
+  // You can add your search logic here
+}
 
 const user = reactive({
   fullName: 'John Doe',
@@ -23,12 +34,28 @@ function handleLogout() {
 }
 </script>
 
+
+
 <template>
   <v-responsive>
     <v-app>
       <v-card>
         <v-toolbar>
-          <v-toolbar-title>FlavorSync</v-toolbar-title>
+          <v-toolbar-title class="d-flex align-self-center">
+            <v-avatar size="60">
+              <!-- Set size of v-avatar here, e.g., 40 pixels -->
+              <v-img
+                src="/pics/logo2.webp"
+                alt="FlavorSync Logo"
+                max-width="100%"
+                max-height="100%"
+              ></v-img>
+            </v-avatar>
+          </v-toolbar-title>
+
+          <v-icon v-if="!showSearch" @click="toggleSearch"
+              >mdi-magnify</v-icon
+            >
 
           <v-text-field
             v-model="searchQuery"
@@ -112,6 +139,7 @@ function handleLogout() {
         </v-toolbar>
         <!-- Main Content Placeholder -->
         <v-main>
+           <h1>Hi</h1>
           <router-view></router-view>
         </v-main>
         <v-footer class="bg-grey-darken-1 text-center d-flex flex-column">

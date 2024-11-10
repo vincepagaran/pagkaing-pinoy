@@ -1,4 +1,4 @@
-<script setup>
+<script>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { reactive } from 'vue'
@@ -35,7 +35,7 @@ function handleLogout() {
 </script>
 
 <template>
-  <v-responsive>
+<v-responsive>
     <v-app>
       <v-card>
         <v-toolbar height="100">
@@ -167,65 +167,3 @@ function handleLogout() {
     </v-app>
   </v-responsive>
 </template>
-
-<style scoped>
-.transparent-card {
-  background-color: transparent !important;
-  box-shadow: none;
-}
-
-.v-toolbar-title {
-  font-family: 'Open Sans';
-  font-weight: 600;
-  font-size: 24px;
-  color: #333;
-}
-
-/* Hero section styling */
-.hero {
-  height: 100vh; /* Full height for the hero section */
-  text-align: center;
-  padding: 100px 20px;
-  background: url('/pics/bg2.jpg'); /* Replace with your background image */
-  background-position: center;
-  background-size: cover;
-}
-
-.hero h1 {
-  color: #213032; /* Matching your color scheme */
-  font-size: 60px;
-  margin: 20px 0;
-}
-
-.hero h4 {
-  color: black;
-  letter-spacing: 2px;
-  font-size: 20px;
-}
-
-.hero span {
-  color: #e74c3c; /* Red highlight color */
-}
-
-/* View Dishes button styling */
-.view-dishes-btn {
-  background-color: #213032; /* Button background color */
-  color: white; /* Button text color */
-  transition: background-color 0.3s;
-}
-
-.view-dishes-btn:hover {
-  background-color: #e74c3c; /* Change button background on hover */
-}
-
-/* Mobile-specific styling */
-@media (max-width: 960px) {
-  .navbar .v-toolbar-title {
-    font-size: 18px;
-  }
-
-  .hero {
-    padding: 50px 10px; /* Adjust padding for mobile */
-  }
-}
-</style>
