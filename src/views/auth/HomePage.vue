@@ -1,44 +1,25 @@
-<script>
+<script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { reactive } from 'vue'
 
 const drawer = ref(false)
 const router = useRouter()
-const showSearch = ref(false)
-const searchQuery = ref('')
 const tab = ref(1)
-
-function toggleSearch() {
-  showSearch.value = !showSearch.value
-}
-
-function performSearch() {
-  console.log('Searching for:', searchQuery.value)
-  // You can add your search logic here
-}
-
-const user = reactive({
-  fullName: 'John Doe',
-  email: 'john.doe@doe.com',
-})
 
 function navigateTo(route) {
   router.push(route)
   drawer.value = false // Close the drawer after navigating
 }
-function handleLogout() {
-  // Add logout logic here, like clearing user data or redirecting to login page
-  console.log('Logging out...')
-  router.push('/') // Redirect to login or home page
-}
 </script>
 
 <template>
-<v-responsive>
+  <v-responsive>
     <v-app>
       <v-card>
-        <v-toolbar height="100">
+        <v-toolbar
+          height="80"
+          style="background-color: #1e1e1e; color: #ffffff"
+        >
           <v-toolbar-title class="d-flex align-self-center">
             <v-avatar size="60">
               <!-- Set size of v-avatar here, e.g., 40 pixels -->
@@ -49,121 +30,167 @@ function handleLogout() {
                 max-height="100%"
               ></v-img>
             </v-avatar>
+            <span class="ml-2 font-weight-bold">FlavorSync</span>
           </v-toolbar-title>
-
+          <v-spacer></v-spacer>
           <v-tabs
             v-model="tab"
             align-tabs="title"
             class="justify-center"
             style="font-family: 'Poppins', sans-serif"
           >
-            <v-tab :value="1" @click="navigateTo('/home')">
-              <v-icon left>mdi-home</v-icon> Home
-            </v-tab>
+            <v-tab :value="1" @click="navigateTo('/')"> Home </v-tab>
             <v-tab :value="2" @click="navigateTo('/about')">
-              <v-icon left>mdi-information</v-icon> About
+              About FlavorSync
             </v-tab>
-            <v-tab :value="3" @click="navigateTo('/recipe')">
-              <v-icon left>mdi-silverware-fork-knife</v-icon> Dishes
-            </v-tab>
-            <v-tab :value="4" @click="navigateTo('/category')">
-              <v-icon left>mdi-view-list</v-icon> Categories
-            </v-tab>
-            <v-tab :value="5" @click="navigateTo('/bookmark')">
-              <v-icon left>mdi-bookmark</v-icon> Cooklater
+            <v-tab :value="2" @click="navigateTo('/login')">
+              <v-icon left>mdi-account</v-icon>Sign up/Log in
             </v-tab>
           </v-tabs>
-          
           <v-spacer></v-spacer>
-
-          <div>
-            <!-- Magnifying Glass Icon -->
-            <v-icon v-if="!showSearch" @click="toggleSearch"
-              >mdi-magnify</v-icon
-            >
-
-            <!-- Search Bar -->
-            <v-text-field
-              v-if="showSearch"
-              v-model="searchQuery"
-              placeholder="Search..."
-              append-inner-icon="mdi-magnify"
-              single-line
-              hide-details
-              dense
-              outlined
-              style="min-width: 150px"
-              @click:append="performSearch"
-              @blur="toggleSearch"
-            />
-          </div>
-
-          <v-menu>
-            <template v-slot:activator="{ props }">
-              <v-btn icon v-bind="props">
-                <v-avatar size="35">
-                  <v-img alt="John" src="/pics/self.jpeg"></v-img>
-                </v-avatar>
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-text>
-                <div class="mx-auto text-center">
-                  <h3>{{ user.fullName }}</h3>
-                  <p class="text-caption mt-1">{{ user.email }}</p>
-                  <v-divider class="my-3"></v-divider>
-
-                  <v-list density="compact" nav>
-                    <v-list-item
-                      prepend-icon="mdi-folder"
-                      title="My Files"
-                      value="myfiles"
-                    ></v-list-item>
-                    <v-list-item
-                      prepend-icon="mdi-account-multiple"
-                      title="Shared with me"
-                      value="shared"
-                    ></v-list-item>
-                    <v-list-item
-                      prepend-icon="mdi-star"
-                      title="Starred"
-                      value="starred"
-                    ></v-list-item>
-
-                    <v-divider class="my-2"></v-divider>
-                    <!-- Divider to separate logout option -->
-
-                    <v-btn prepend-icon="mdi-logout" @click="handleLogout"
-                      >Logout</v-btn
-                    >
-                  </v-list>
-                </div>
-              </v-card-text>
-            </v-card>
-          </v-menu>
+          <v-btn icon @click="drawer = !drawer">
+            <v-icon>mdi-menu</v-icon>
+          </v-btn>
         </v-toolbar>
+
         <!-- Main Content Placeholder -->
         <v-main>
           <div class="hero">
             <div class="content">
-              <h4>Authentic Filipino Recipes</h4>
-              <h1>Welcome to <span>Pagkaing Pinoy!</span></h1>
+              <h4>Discover New Recipes</h4>
+              <h1>Welcome to <span>FlavorSync</span>!</h1>
               <div class="button">
-                <v-btn @click="navigateTo('/recipe')" class="view-dishes-btn"
-                  >View Dishes</v-btn
+                <v-btn
+                  @click="navigateTo('/recipe')"
+                  class="view-dishes-btn"
+                  large
                 >
+                  Start Exploring Recipes
+                </v-btn>
               </div>
             </div>
           </div>
+
+          <!-- Featured Sections -->
+          <v-container fluid class="featured-section">
+            <v-row>
+              <!-- Popular Recipes Card -->
+              <v-col cols="12" md="4">
+                <v-card class="pa-5" outlined>
+                  <v-icon color="deep-orange" large class="mb-3"
+                    >mdi-fire</v-icon
+                  >
+                  <h2 class="text-h5">Popular Recipes</h2>
+                  <p>
+                    Check out some of the most popular recipes that our
+                    community loves to cook and share.
+                  </p>
+                  <v-btn
+                    @click="navigateTo('/popular')"
+                    color="deep-orange"
+                    text
+                  >
+                    View Popular Recipes
+                  </v-btn>
+                </v-card>
+              </v-col>
+
+              <!-- New Arrivals Card -->
+              <v-col cols="12" md="4">
+                <v-card class="pa-5" outlined>
+                  <v-icon color="blue" large class="mb-3">mdi-new-box</v-icon>
+                  <h2 class="text-h5">New Arrivals</h2>
+                  <p>
+                    Discover the latest recipes added to our collection,
+                    bringing fresh ideas to your kitchen.
+                  </p>
+                  <v-btn @click="navigateTo('/new-arrivals')" color="blue" text>
+                    Explore New Recipes
+                  </v-btn>
+                </v-card>
+              </v-col>
+
+              <!-- Cuisine Types Card -->
+              <v-col cols="12" md="4">
+                <v-card class="pa-5" outlined>
+                  <v-icon color="green" large class="mb-3">mdi-earth</v-icon>
+                  <h2 class="text-h5">Explore by Cuisine</h2>
+                  <p>
+                    From Italian to Filipino, explore dishes from different
+                    cuisines and broaden your culinary experience.
+                  </p>
+                  <v-btn @click="navigateTo('/cuisines')" color="green" text>
+                    Browse Cuisines
+                  </v-btn>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
 
           <router-view></router-view>
         </v-main>
         <v-footer class="bg-grey-darken-1 text-center d-flex flex-column">
           <v-divider></v-divider>
 
-          <div>{{ new Date().getFullYear() }} — <strong>COOK</strong></div>
+          <!-- Custom Footer Content -->
+          <p>© {{ new Date().getFullYear() }} — <strong>FlavorSync</strong></p>
+          <p>Bringing the world of flavors to your kitchen</p>
         </v-footer>
       </v-card>
     </v-app>
   </v-responsive>
 </template>
+
+<style scoped>
+.hero {
+  height: 90vh; /* Full height for the hero section */
+  text-align: center;
+  padding: 100px 20px;
+  background: linear-gradient(to bottom, #a3b8c8, #2c3e50);
+  color: #ffffff; /* Light text */
+}
+
+.hero h1 {
+  color: #213032; /* Dark, contrasting color for the main heading */
+  font-size: 60px;
+  margin: 20px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Adding a subtle shadow to the heading text */
+}
+
+.hero h4 {
+  color: #f1f1f1; /* Lighter color for subheadings */
+  letter-spacing: 2px;
+  font-size: 20px;
+}
+
+.hero span {
+  color: #3498db; /* Red highlight color */
+}
+
+/* View Dishes button styling */
+.view-dishes-btn {
+  background-color: #1abc9c; /* Button background color */
+  color: white; /* Button text color */
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Soft shadow around the button */
+}
+
+.view-dishes-btn:hover {
+  background-color: #16a085; /* Change button background on hover */
+}
+
+.v-footer {
+  background: linear-gradient(to bottom, #a3b8c8, #2c3e50);
+  color: white; /* White text */
+  padding: 20px 0;
+}
+
+.v-footer .v-btn {
+  margin: 5px;
+}
+
+.v-footer .v-icon {
+  margin: 0 10px;
+  cursor: pointer;
+}
+</style>

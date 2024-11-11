@@ -7,6 +7,10 @@ const password = ref('')
 const rememberMe = ref(false)
 const router = useRouter() // Use Vue Router
 
+function navigateTo(route) {
+  router.push(route)
+}
+
 function home() {
   if (email.value && password.value) {
     console.log(
@@ -28,13 +32,20 @@ function home() {
   <v-app>
     <v-main>
       <v-container fluid class="d-flex justify-center align-center fill-height">
+        <v-btn
+          @click="navigateTo('/')"
+          class="back-home-btn"
+          outlined
+          color="white"
+        >
+          <v-icon left>mdi-arrow-left</v-icon>
+        </v-btn>
+        <!-- Login Form -->
+        <div class="loginform">
           <v-avatar size="60">
             <!-- Set size of v-avatar here, e.g., 40 pixels -->
             <v-img src="/pics/logo2.webp" alt="FlavorSync Logo"></v-img>
           </v-avatar>
-        <!-- Login Form -->
-        <div class="loginform">
-          <h1 class="logintitle">Pagkaing<span>Pinoy</span></h1>
           <h2>Login</h2>
           <div class="logininput">
             <i class="fa-solid fa-user"></i>
@@ -70,15 +81,34 @@ function home() {
   font-family: 'Poppins', sans-serif;
 }
 
+.back-home-btn {
+  border-radius: 50%; /* Make the button round */
+  width: 40px; /* Set the width */
+  height: 60px; /* Set the height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0; /* Remove padding for a compact look */
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2); /* Optional shadow */
+}
+
+.back-home-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
 .v-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/public/pics/bg2.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: linear-gradient(to bottom, #a9c6d7, #34495e);
 }
 
 .fill-height {
