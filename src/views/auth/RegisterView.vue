@@ -78,10 +78,6 @@ function register() {
           <h2 class="signuptitle">Sign Up</h2>
           <div class="signinput">
             <i class="fa-solid fa-user"></i>
-            <input type="Email" v-model="email" placeholder="Email" />
-          </div>
-          <div class="signinput">
-            <i class="fa-solid fa-user"></i>
             <input type="text" v-model="firstName" placeholder="First Name" />
           </div>
           <div class="signinput">
@@ -95,6 +91,10 @@ function register() {
               v-model="contactNumber"
               placeholder="Contact Number"
             />
+          </div>
+          <div class="signinput">
+            <i class="fa-solid fa-user"></i>
+            <input type="Email" v-model="email" placeholder="Email" />
           </div>
           <div class="signinput">
             <i class="fa-solid fa-lock"></i>

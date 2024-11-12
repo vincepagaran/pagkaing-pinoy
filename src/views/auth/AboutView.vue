@@ -59,15 +59,15 @@ function navigateTo(route) {
             <!-- About Title and Introduction -->
             <v-row>
               <v-col cols="12">
-                <h1 class="text-center text-h3 mb-5">About FlavorSync</h1>
-                <p class="text-center mb-5">
-                  FlavorSync is your global guide to the world of cooking. Our
-                  mission is to make every recipe in the world accessible,
-                  shareable, and easy to follow. Whether you’re looking to
-                  recreate family favorites, experiment with new flavors, or
-                  learn the culinary traditions of different cultures,
-                  FlavorSync is here to support your journey.
-                </p>
+                  <h1 class="text-center text-h3 mb-5">About FlavorSync</h1>
+                  <p class="text-center mb-5">
+                    FlavorSync is your global guide to the world of cooking. Our
+                    mission is to make every recipe in the world accessible,
+                    shareable, and easy to follow. Whether you’re looking to
+                    recreate family favorites, experiment with new flavors, or
+                    learn the culinary traditions of different cultures,
+                    FlavorSync is here to support your journey.
+                  </p>
               </v-col>
             </v-row>
 

@@ -60,13 +60,15 @@ function navigateTo(route) {
               <h4>Discover New Recipes</h4>
               <h1>Welcome to <span>FlavorSync</span>!</h1>
               <div class="button">
-                <v-btn
-                  @click="navigateTo('/recipe')"
-                  class="view-dishes-btn"
-                  large
-                >
-                  Start Exploring Recipes
-                </v-btn>
+                <v-row justify="center">
+                  <v-btn
+                    @click="navigateTo('/recipe')"
+                    class="view-dishes-btn"
+                    large
+                  >
+                    Start Exploring Recipes
+                  </v-btn>
+                </v-row>
               </div>
             </div>
           </div>
@@ -169,10 +171,14 @@ function navigateTo(route) {
 
 /* View Dishes button styling */
 .view-dishes-btn {
-  background-color: #1abc9c; /* Button background color */
-  color: white; /* Button text color */
-  transition: background-color 0.3s;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Soft shadow around the button */
+  background: rgba(64, 64, 64, 0.15);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  backdrop-filter: blur(25px);
+  text-align: center;
+  color: white;
+  width: 400px;
+  box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.15);
 }
 
 .view-dishes-btn:hover {
@@ -180,8 +186,8 @@ function navigateTo(route) {
 }
 
 .v-footer {
-  background: linear-gradient(to bottom, #a3b8c8, #2c3e50);
-  color: white; /* White text */
+  background-color: #1e1e1e;
+  color: #ffffff;
   padding: 20px 0;
 }
 
