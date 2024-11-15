@@ -21,6 +21,20 @@ const vuetify = createVuetify({
   },
   components,
   directives,
+  theme: {
+    defaultTheme: 'customTheme',
+    themes: {
+      customTheme: {
+        dark: false,
+        colors: {
+          // Your color palette here
+        },
+        variables: {
+          fontFamily: 'Roboto, sans-serif',
+        },
+      },
+    },
+  },
 })
 
 app.use(createPinia())
