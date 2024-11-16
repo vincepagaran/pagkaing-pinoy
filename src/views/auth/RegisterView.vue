@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { supabase, formActionDefault} from '../../../supabase';
+import { supabase, formActionDefault } from '@/utils/supabase.js'
 
 const email = ref('')
 const firstName = ref('')
@@ -10,10 +10,6 @@ const contactNumber = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 const router = useRouter()
-
-const formAction = ref({
-  ...formActionDefault
-})
 
 // Simulated existing users (for demo purposes)
 const existingUsers = ['test@example.com', 'user@example.com']
