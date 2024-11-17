@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { supabase, formActionDefault } from '@/utils/supabase.js'
 
 const email = ref('')
 const firstName = ref('')
@@ -11,30 +12,48 @@ const confirmPassword = ref('')
 const router = useRouter()
 
 // Simulated existing users (for demo purposes)
-const existingUsers = ['test@example.com', 'user@example.com'];
+const existingUsers = ['test@example.com', 'user@example.com']
+
+function navigateTo(route) {
+  router.push(route)
+}
 
 function register() {
   // Check if the email already exists
   if (existingUsers.includes(email.value)) {
-    alert('This email is already registered. Please use a different email.');
-    return;
+    alert('This email is already registered. Please use a different email.')
+    return
   }
 
-  if (email.value && firstName.value && lastName.value && contactNumber.value && password.value && confirmPassword.value) {
+  if (
+    email.value &&
+    firstName.value &&
+    lastName.value &&
+    contactNumber.value &&
+    password.value &&
+    confirmPassword.value
+  ) {
     if (password.value === confirmPassword.value) {
-      console.log('Registering with:', email.value, firstName.value, lastName.value, contactNumber.value, password.value);
-      
+      console.log(
+        'Registering with:',
+        email.value,
+        firstName.value,
+        lastName.value,
+        contactNumber.value,
+        password.value,
+      )
+
       // Here you would normally send the registration data to your server.
       // For demo purposes, we're just pushing the email to existingUsers array.
-      existingUsers.push(email.value);
-      
+      existingUsers.push(email.value)
+
       // Redirect to login after successful registration
-      router.push('/');
+      router.push('/')
     } else {
-      alert('Passwords do not match.');
+      alert('Passwords do not match.')
     }
   } else {
-    alert('Please fill out all fields.');
+    alert('Please fill out all fields.')
   }
 }
 </script>
@@ -43,13 +62,21 @@ function register() {
   <v-app>
     <v-main>
       <v-container fluid class="d-flex justify-center align-center fill-height">
+        <v-btn
+          @click="navigateTo('/login')"
+          class="back-home-btn"
+          outlined
+          color="white"
+        >
+          <v-icon left>mdi-arrow-left</v-icon>
+        </v-btn>
         <!-- Sign-up Form -->
         <div class="signupform">
-          <h1 class="signuptitle">Sign Up</h1>
-          <div class="signinput">
-            <i class="fa-solid fa-user"></i>
-            <input type="Email" v-model="email" placeholder="Email" />
-          </div>
+          <v-avatar size="60">
+            <!-- Set size of v-avatar here, e.g., 40 pixels -->
+            <v-img src="/pics/logo2.webp" alt="FlavorSync Logo"></v-img>
+          </v-avatar>
+          <h2 class="signuptitle">Sign Up</h2>
           <div class="signinput">
             <i class="fa-solid fa-user"></i>
             <input type="text" v-model="firstName" placeholder="First Name" />
@@ -60,7 +87,15 @@ function register() {
           </div>
           <div class="signinput">
             <i class="fa-solid fa-phone"></i>
-            <input type="number" v-model="contactNumber" placeholder="Contact Number" />
+            <input
+              type="number"
+              v-model="contactNumber"
+              placeholder="Contact Number"
+            />
+          </div>
+          <div class="signinput">
+            <i class="fa-solid fa-user"></i>
+            <input type="Email" v-model="email" placeholder="Email" />
           </div>
           <div class="signinput">
             <i class="fa-solid fa-lock"></i>
@@ -68,13 +103,19 @@ function register() {
           </div>
           <div class="signinput">
             <i class="fa-solid fa-lock"></i>
-            <input type="password" v-model="confirmPassword" placeholder="Confirm Password" />
+            <input
+              type="password"
+              v-model="confirmPassword"
+              placeholder="Confirm Password"
+            />
           </div>
 
-          <button @click="register" id="Registerbtn" class="signinbtn">Confirm</button>
+          <button @click="register" id="Registerbtn" class="signinbtn">
+            Confirm
+          </button>
           <p class="register">
             Already have an account?
-            <router-link to="/">Login here</router-link>
+            <router-link to="/login">Login here</router-link>
           </p>
         </div>
       </v-container>
@@ -91,15 +132,35 @@ function register() {
   font-family: 'Poppins', sans-serif;
 }
 
-.v-container {
-  min-height: 100vh;
+.back-home-btn {
+  border-radius: 50%; /* Make the button round */
+  width: 40px; /* Set the width */
+  height: 60px; /* Set the height */
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/public/pics/bg2.jpg'); 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  padding: 0; /* Remove padding for a compact look */
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2); /* Optional shadow */
+}
+
+.back-home-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.v-container {
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #a3b8c8, #2c3e50);
+  color: #ffffff; /* Light text */
 }
 
 .fill-height {
@@ -162,8 +223,8 @@ function register() {
 }
 
 /* Hide the spinner on number input */
-.signinput input[type="number"]::-webkit-inner-spin-button,
-.signinput input[type="number"]::-webkit-outer-spin-button {
+.signinput input[type='number']::-webkit-inner-spin-button,
+.signinput input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
